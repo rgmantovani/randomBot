@@ -47,12 +47,15 @@ createRandomOMLRun = function(id, tasks.ids, lrn.list) {
   lrn = sample(x = lrn.list, size = 1)[[1]]
   print(lrn$name)	
   
-  catf(" *** Hyperparameter setting *** ")
+  catf(" *** Hyperparameter space *** ")
   par.set = getHyperSpace(lrn)
   print(par.set)
 
   # get a sample (configuration) randomly from that parameter space
+  catf(" *** New random hyperparameter setting *** ")
   random.parSet = lapply(par.set$pars, ParamHelpers::sampleValue)
+  print(random.parSet)
+
   new.parSet = ParamHelpers::trafoValue(par.set, random.parSet)
 
   new.lrn = setHyperPars(learner = lrn, par.vals = new.parSet)
@@ -62,9 +65,6 @@ createRandomOMLRun = function(id, tasks.ids, lrn.list) {
   tags = c("randomBot", "mlr")
   tagOMLObject(id = run.id, object = "run", tags = tags)
 
-  oml.run$run$run.id = run.id
-  catf("*** Run results ***")
-  return(oml.run)
 }
 
 
