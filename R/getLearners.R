@@ -1,9 +1,10 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
- # From par set, returns a random sample of values
-getSampleFromHyperSpace = function(par.set) {
+getPredefinedLearners = function() {
 
+  learners.list = lapply(predefined.learners, makeLearner, predict.type = "prob")
+  return(learners.list)
 }
 
 # -------------------------------------------------------------------------------------------------

@@ -1,13 +1,16 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getHyperSpace = function(learner) {
+getHyperSpace = function(learner, task) {
 
   name = sub('classif.', '', learner$id)
   substring(name, 1, 1) = toupper(substring(name, 1, 1)) 
-	
+  
+  n = mlr::getTaskSize(task)
+  p = mlr::getTaskNFeats(task)
+
   fn.space = get(paste0("get", name , "Space"))
-  par.set = fn.space()
+  par.set = fn.space(p = p, n = n)
   return(par.set)
 
 }

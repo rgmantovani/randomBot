@@ -1,8 +1,11 @@
 .Rproj.user
 .Rhistory
 .RData
+.BatchJobs.R
 
+NEWS
 TODO_List
 randomJobs-files/
+test-files/
 .Rbuildignore
 randomBot.Rproj

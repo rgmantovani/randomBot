@@ -1,33 +1,29 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getAllMlrLearners = function(oml.task) {
+getPredefinedTasks = function(ids) {
 
-  # Datasets with no Class target, but it has on the task
-  if (length(oml.task$input$data.set$target.features) == 0) {
-    oml.task$input$data.set$target.features = oml.task$input$target.features
-  }
+  temp.tasks = listOMLTasks(status = "active")
+  tasks = temp.tasks[temp.tasks$task.id %in% ids, ]
+  tasks$dim = tasks$NumberOfInstances * tasks$NumberOfFeatures
+  tasks = tasks[ order(tasks$dim, decreasing = FALSE), ]
 
-  if(length(oml.task$input$evaluation.measures) == 0) {
-  	oml.task$input$evaluation.measures = "predictive_accuracy"
-  }
-
-  obj = convertOMLTaskToMlr(oml.task)
-  
-  lrn.list = listLearners(obj$mlr.task, create = TRUE, properties = "prob")
-  return(lrn.list)
-
+  return(tasks$task.id)
 }
+
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getPreDefinedMlrLearners = function() {
+getTaggedTasks = function(tag) {
 
-	lrn.list = lapply(pre.selected.lrns, makeLearner)
-	return(lrn.list)
+  tasks = listOMLTasks(tag = tag)
+  tasks$dim = tasks$NumberOfInstances * tasks$NumberOfFeatures
+  tasks = tasks[ order(tasks$dim, decreasing = FALSE), ]
 
+  return(tasks$task.id)
 }
+
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
