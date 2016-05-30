@@ -11,14 +11,12 @@ batchmark = function(reg, task.id, learners, measures, repls = 1L, overwrite = F
 
   assertCount(repls)
   assertFlag(overwrite)
-  
   learners.names = vcapply(learners, "[[", "id")
 
   # Adding problems (tasks)
   problem.designs = Map(
     f = function(id, task.id, seed) {
-      task = getBatchTaskWrapper(task.id, measures)
-      static = list(task = task)
+      static = list(task = getBatchTaskWrapper(task.id, measures))
       addProblem(reg = reg, id = id, static = static, overwrite = overwrite, seed = seed)
       makeDesign(id = id)
     }, 
@@ -28,7 +26,7 @@ batchmark = function(reg, task.id, learners, measures, repls = 1L, overwrite = F
   )
   
   algorithm.designs = Map(
-    f = function(id, learner, tag) {
+    f = function(id, learner) {
       apply.fun = getBatchAlgoWrapper(learner)
       addAlgorithm(reg = reg, id = id, fun = apply.fun, overwrite = overwrite)
       makeDesign(id = id)

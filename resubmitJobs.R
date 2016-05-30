@@ -1,17 +1,29 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-main = function() {
+resubmitJobs = function() {
 
   devtools::load_all()
-  runExperiment()
+
+  reg = makeExperimentRegistry(
+    id = "randomBot", 
+    packages = c("ParamHelpers", "mlr", "OpenML"), 
+    src.dirs = "R/"
+  )
+
+  catf(" * There are remaining jobs or new ones ...")
+  all.jobs = setdiff(findNotDone(reg), findErrors(reg))
+
+  submitJobs(reg = reg, ids = all.jobs, job.delay = TRUE)
+  status = waitForJobs(reg = reg, ids = all.jobs)
+  catf(" * Done.")
 
 }
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-main()
+resubmitJobs()
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

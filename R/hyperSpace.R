@@ -4,7 +4,8 @@
 getRangerSpace = function(...) {
   args = list(...)
   par.set = makeParamSet(
-    makeIntegerParam("mtry", lower = round(args$p ^ 0.1), upper = round(args$p ^ 0.9))
+    makeIntegerParam("mtry", lower = round(args$p ^ 0.1), upper = round(args$p ^ 0.9)),
+    makeIntegerParam("num.trees", lower = 0, upper=10, trafo = function(x) 2^x)
   )
   return(par.set)
 }
@@ -68,6 +69,11 @@ getGbmSpace = function(...) {
   )
   return(par.set)
 }
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
+#TODO: DBN space, SAE Space, H20 Space
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 
 NEWS
 TODO_List
-randomJobs-files/
-test-files/
+*-files/
+misc/
 .Rbuildignore
 randomBot.Rproj
