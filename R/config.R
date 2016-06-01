@@ -15,11 +15,11 @@ configureMlr(on.learner.error = "warn")
 configureMlr(show.info = TRUE)
 
 # tuning constant
-TUNING.CONSTANT = 1 #100 
+TUNING.CONSTANT = 3 #100 
 
 # for debuging while coding
-# DEBUG = TRUE
-DEBUG = FALSE
+DEBUG = TRUE
+# DEBUG = FALSE
 
 #Sorted according to the runtime (faster to lowest)
 selected.tasks = c(3494, 3492, 3493, 11, 3913, 10093, 9980, 3019, 9946, 9971, 10101, 37,

@@ -27,7 +27,6 @@ randomSearch = function(task, learner, par.set, maxiter = 3, show.info = FALSE) 
     }
     
     perf = getBMRAggrPerformances(oml.run$bmr, as.df=TRUE)[,-c(1:2)]
-    params = 
     ret = cbind(run.id, as.data.frame(params), perf)
     if(show.info) {
       print(ret)

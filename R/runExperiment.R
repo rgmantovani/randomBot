@@ -4,12 +4,12 @@
 runExperiment = function() {
 
   reg = makeExperimentRegistry(
-   id = "exploration", 
+   id = "randomBot", 
     packages = c("ParamHelpers", "mlr", "OpenML"), 
     src.dirs = "R/"
   )
 
-  tasks = selected.tasks
+  tasks = getTaggedTasks(tag = "study_14")
 
   measures = c("predictive_accuracy", 
     "usercpu_time_millis_testing", 
