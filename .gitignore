@@ -7,5 +7,7 @@ NEWS
 TODO_List
 *-files/
 misc/
+output/
 .Rbuildignore
+.log
 randomBot.Rproj
