@@ -8,6 +8,8 @@ TODO_List
 *-files/
 misc/
 output/
+examples/
+
 .Rbuildignore
-.log
+*.log
 randomBot.Rproj

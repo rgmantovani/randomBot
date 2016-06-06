@@ -17,7 +17,10 @@ randomSearch = function(task, learner, par.set, maxiter = 3, show.info = FALSE) 
   # Evaluate all of the settings
   aux = lapply(vals, function(params) {
 
-    new.lrn = setHyperPars(learner = learner, par.vals = params)
+    # remove NA values from params
+    new.params = params[!sapply(params, is.na)]
+
+    new.lrn = setHyperPars(learner = learner, par.vals = new.params)
     oml.run = runTaskMlr(task = task, learner = new.lrn)
     
     if(DEBUG) {

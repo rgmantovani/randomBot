@@ -3,7 +3,7 @@
 
   devtools::load_all()
 
-  # unlink("randomBot-files/", recursive = TRUE)
+  unlink("randomBot-files/", recursive = TRUE)
 
   reg = makeExperimentRegistry(
     id = "randomBot", 
@@ -12,14 +12,15 @@
   )
 
   # tasks = getPredefinedTasks(pre)
-  tasks = c(3647, 3577, 3731, 3729)
+  # tasks = c(3647, 3577, 3731) #, 3729)
+  tasks = c(3494, 3492, 3493)
   # tasks = selected.tasks#[1:30]
 
   measures = c("predictive_accuracy", 
     "usercpu_time_millis_testing", 
     "usercpu_time_millis_training")
 
-  learners = getPredefinedLearners()[1:2]
+  learners = getPredefinedLearners()#[7:8]
 
   # Creating new jobs
   new.jobs = settingExperiment(
@@ -47,12 +48,14 @@
   # }
 
   # catf(" * Submitting all jobs ...")
-  submitJobs(reg = reg, ids = all.jobs, job.delay = TRUE)
+  submitJobs(
+    reg = reg, 
+    ids = all.jobs, 
+    resources = list(memory = 8 * 1024),# , walltime = 3600),
+    job.delay = TRUE
+  )
+  
   status = waitForJobs(reg = reg, ids = all.jobs)
-
-  # # catf(" * Saving results ...")
-  # done.jobs = findDone(reg)
-  # df = reduceDefaultResults(reg, done.jobs)
   catf(" * Done.")
 
 # -------------------------------------------------------------------------------------------------

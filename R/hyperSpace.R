@@ -73,91 +73,39 @@ getGbmSpace = function(...) {
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-#TODO: DBN space, SAE Space, H20 Space
+getLdaSpace = function(...) {
+  args = list(...)
+  par.set = makeParamSet(
+    makeDiscreteParam("method", values = c("moment", "mle", "mve", "t"), default = "moment"),
+    makeNumericParam("nu", lower = 2, upper = args$n, requires = quote(method == "t")),
+    makeNumericParam("tol", lower = -5, upper = 0, trafo = function(x) 10^x),
+    makeDiscreteParam("predict.method", values = c("plug-in", "predictive", "debiased"), 
+      default = "plug-in")
+  )
+  return(par.set)
+}
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-# getAvNNetSpace = function() {
-#   par.set = makeParamSet(
-#     makeLogicalParam("bag"),
-#     makeIntegerParam("repeats", lower = 1, upper = 50)
-#   )
-#   return(par.set)
-# }
+getQdaSpace = function(...) {
+  args = list(...)
+  par.set = makeParamSet(
+    makeDiscreteParam("method", values = c("moment", "mle", "mve", "t"), default = "moment"),
+    makeNumericParam("nu", lower = 2, upper = args$n, requires = quote(method == "t")),
+    makeDiscreteParam("predict.method", values = c("plug-in", "predictive", "debiased"), 
+      default = "plug-in")
+  )
+  return(par.set)
+}
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-# getAdaSpace = function() {
-#   par.set = makeParamSet(
-#     makeIntegerParam("iter", lower = 2, upper = 128, default = 50),
-#     makeNumericParam("nu", lower = 0, upper = 0.5, default = 0.1),
-#     makeIntegerParam("minsplit", lower = 1, upper = 64, default = 20),
-#     makeIntegerParam("maxdepth", lower = 1, upper = 30, default = 30)
-#   )
-#   return(par.set)
-# }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-# getRandomForestSpace = function() {
-#   par.set = makeParamSet(
-#     makeIntegerParam("ntree", lower = 2, upper = 512, default = 500),
-#     makeIntegerParam("mtry",  lower = 2, upper = 50)
-#   )
-#   return(par.set)
-# }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-# getSvmSpace = function() {
-#   par.set = makeParamSet(
-#     makeDiscreteParam("kernel", values = c("linear","polynomial","radial","sigmoid"), default = "polynomial"),
-#     makeNumericParam("cost", lower = -15, upper = 15, trafo = function(x) 2^x),
-#     makeIntegerParam("degree",lower = 1,upper = 5, requires = quote(kernel == "polynomial")),
-#     makeNumericParam("coef0",lower = 0, upper = 1, requires = quote(kernel == "polynomial")),
-#     makeNumericParam("gamma", lower=-15, upper=15, default = -6, trafo = function(x) 2^x, 
-#      requires = quote(kernel == "radial"))
-#   )
-#   return(par.set)
-# }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-# getJ48Space = function() {
-#   par.set = makeParamSet(
-#     makeNumericParam("C", lower = 0.001, upper = 0.5, default = 0.25),
-#     makeIntegerParam("M", lower = 1, upper = 64, default = 2)
-#   )
-#   return(par.set)  
-# }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-# getPARTSpace = function() {
-#   par.set = makeParamSet(
-#     makeIntegerParam("M", lower = 1, upper = 64, default = 2),
-#     makeIntegerParam("N", lower = 2, upper = 5, default = 3)
-#   )
-#   return(par.set)
-# }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-# getBoostingSpace = function() {
-#   par.set = makeParamSet(
-#     makeIntegerParam("minsplit", lower = 1, upper = 64, default = 20),
-#     makeNumericParam("cp", lower = 0, upper = 1, default = 0.01),
-#     makeIntegerParam("maxdepth", lower = 1, upper = 30, default = 30)
-#   )
-#   return(par.set)
-# }
+getNaiveBayesSpace = function(...) {
+  par.set =  makeParamSet()
+  return(par.set)
+}
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
