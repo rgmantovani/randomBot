@@ -1,6 +1,15 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
+# reducingResultsByLearner(lrn = "classif.rpart")
+# reducingResultsByLearner(lrn = "classif.kknn")
+# reducingResultsByLearner(lrn = "classif.svm")
+# reducingResultsByLearner(lrn = "classif.gbm")
+# reducingResultsByLearner(lrn = "classif.ranger")
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
 reducingResultsByLearner = function(lrn = NULL){
 
   devtools::load_all()
@@ -36,15 +45,6 @@ reducingResultsByLearner = function(lrn = NULL){
   save(x = ret, file = paste0("output/", output.file, ".RData"))
 
 }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-# reducingResultsByLearner(lrn = "classif.rpart")
-reducingResultsByLearner(lrn = "classif.kknn")
-# reducingResultsByLearner(lrn = "classif.svm")
-# reducingResultsByLearner(lrn = "classif.gbm")
-# reducingResultsByLearner(lrn = "classif.ranger")
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
