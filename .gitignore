@@ -5,6 +5,7 @@
 
 NEWS
 TODO_List
+
 *-files/
 misc/
 output/
@@ -13,3 +14,5 @@ examples/
 .Rbuildignore
 *.log
 randomBot.Rproj
+
+summarizingResults.sh

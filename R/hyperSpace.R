@@ -13,15 +13,17 @@ getRangerSpace = function(...) {
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getNnTrainSpace = function(...) {
-  par.set = makeParamSet(
-    makeIntegerVectorParam("hidden", len=2, lower= 0, upper=10, trafo = function(x) 2^x, cnames=NULL),
-    makeNumericParam("learningrate", lower = -5, upper = 0, trafo = function(x) 10^x),
-    makeNumericParam("momentum", lower = 0.1, upper = 0.9),
-    makeIntegerParam("numepochs", lower = 2, upper = 1000)
-  )
-  return(par.set)
-}
+# Add maximum number of layers
+# getNnTrainSpace = function(...) {
+#   par.set = makeParamSet(
+#     makeIntegerVectorParam("hidden", len = 2, lower = 0, upper = 10, 
+#       trafo = function(x) 2^x, cnames=NULL),
+#     makeNumericParam("learningrate", lower = -5, upper = 0, trafo = function(x) 10^x),
+#     makeNumericParam("momentum", lower = 0.1, upper = 0.9),
+#     makeIntegerParam("numepochs", lower = 2, upper = 1000)
+#   )
+#   return(par.set)
+# }
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
@@ -52,8 +54,10 @@ getRpartSpace = function(...) {
   args = list(...)
   par.set = makeParamSet(
     makeNumericParam("cp", lower = -4, upper = -1, trafo = function(x) 10^x),
-    makeIntegerParam("minsplit", lower = 1, upper = min(7, floor(log2(args$n))), trafo = function(x) 2^x),
-    makeIntegerParam("minbucket", lower = 0, upper = min(6, floor(log2(args$n))), trafo = function(x) 2^x)
+    makeIntegerParam("minsplit", lower = 1, upper = min(7, floor(log2(args$n))), 
+      trafo = function(x) 2^x),
+    makeIntegerParam("minbucket", lower = 0, upper = min(6, floor(log2(args$n))), 
+      trafo = function(x) 2^x)
   )
   return(par.set)  
 }
