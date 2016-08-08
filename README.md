@@ -8,7 +8,7 @@ For each single combination of ```j = {algorithm, problem}```, the bot will eval
 ### Technical Requirements
 
 * R version >= 3.1.0
-* Required packages: [mlr](https://cran.r-project.org/web/packages/mlr/index.html), [OpenML](https://github.com/openml/openml-r), [BatchExperiments] (https://github.com/tudo-r/BatchExperiments), [checkmate] (https://cran.r-project.org/web/packages/checkmate/index.html)
+* Required packages: [mlr](https://cran.r-project.org/web/packages/mlr/index.html), [OpenML](https://github.com/openml/openml-r), [BatchExperiments](https://github.com/tudo-r/BatchExperiments), [checkmate](https://cran.r-project.org/web/packages/checkmate/index.html)
 
 ### Setup
 
