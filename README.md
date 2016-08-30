@@ -1,9 +1,9 @@
 # RandomBot
 
 'RandomBot' is a bot that searches randomly the hyper-parameter space from different Machine Learning (ML) algorithms. 
-It executes some 'mlr' learners [1] over OpenML classification problems [2] using the 'BatchExperiments' structure.
+It executes some 'mlr' [1] learners over OpenML [2] classification problems using the 'BatchExperiments' package [3] structure.
 
-For each single combination of ```j = {algorithm, problem}```, the bot will evaluate ```N = 100 * D``` different configurations thourgh a Random Search (RS) process. Here, D is the hyper-space's dimensions (the number of hyper-parameters), and 100 is the tuning constant defined by ourselves.
+For each single job *j*, i.e., a combination of ```j = {algorithm, problem}```, the bot will evaluate ```N = 100 * D``` different hyper-parameter configurations through a Random Search (RS) tuning process. Here, *D* denotes the number hyper-space's dimension (the number of hyper-parameters), and *100* is the tuning constant defined by ourselves empirically.
 
 ### Technical Requirements
 
@@ -29,19 +29,19 @@ devtools::install_github("tudo-r/BatchExperiments")
 
 ### Running the code
 
-To run the project, plese, execute it by the command:
+To run the project, please, call it by the bash file executing it by the command:
 ```
 ./runRandomBot.sh &
 ```
 
-It will call the bash file and start the execution saving the status in an output log file. You can follow the execution and errors checking directly this log file. If you want to run experiments directly through the R script, you can call the command:
+It will start the execution saving the status in an output log file. You can follow the execution and errors checking directly this log file. If you want to run experiments directly through the R script, you can call the command:
 ```
 R CMD BATCH --no-save --no-restore reducingResultsByLearner.R out.log
 ```
 
 ### How it works?
 
-The bot will load all the [OpenML](http://www.openml.org/) tasks defined by the user via task ids (task), and all the 'mlr' learners defined in configuration file (algo). After that, an experiment registry is created using the 'BatchExperiments' package: one single independent job for each combination of ```j = {algo, task}```. They will start in parallel and results will be saved in the '*randomBot-files*' directory (the registry's main folder). You have an example of application in the ```testingScript.R``` file.
+The bot will load all the [OpenML](http://www.openml.org/) tasks defined by the user via the OpenML task ids (task), and all the 'mlr' learners defined in the configuration file (algo). After that, an experiment registry is created using the 'BatchExperiments' package: one single independent job for each combination of ```j = {algo, task}```. They will start in parallel and results will be saved in the '*randomBot-files*' directory (the registry's main folder). You have an example of application in the ```testingScript.R``` file.
 
 To check the experiment's status you can start a new R session from the project's folder and use the commands:
 ```R
@@ -62,7 +62,7 @@ devtools::load_all()
 # Reducing kknn results as an example
 reducingResultsByLearner(lrn = "classif.kknn") 
 ```
-it will create an ```output```folder with two files for each learner: a <learner>.RData and a <learner>.csv. They contained the hyper-space searched during the executions.
+it will create an ```output```folder with two files for each learner: a *<learner>.RData* and a *<learner>.csv*. They contained the hyper-space searched during the executions.
 
 
 ### Contact
