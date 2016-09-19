@@ -1,6 +1,21 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
+getHyperSpace = function(learner, ...) {
+
+  temp = gsub(x = learner$id, pattern = ".preproc", replacement = "")
+  name = sub('.imputed', '', temp)
+  name = sub('classif.', '', name)
+  substring(name, 1, 1) = toupper(substring(name, 1, 1)) 
+  
+  fn.space = get(paste0("get", name , "Space"))
+  par.set = fn.space(...)
+  return(par.set)
+}
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
 getRangerSpace = function(...) {
   args = list(...)
   par.set = makeParamSet(
@@ -9,21 +24,6 @@ getRangerSpace = function(...) {
   )
   return(par.set)
 }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-# Add maximum number of layers
-# getNnTrainSpace = function(...) {
-#   par.set = makeParamSet(
-#     makeIntegerVectorParam("hidden", len = 2, lower = 0, upper = 10, 
-#       trafo = function(x) 2^x, cnames=NULL),
-#     makeNumericParam("learningrate", lower = -5, upper = 0, trafo = function(x) 10^x),
-#     makeNumericParam("momentum", lower = 0.1, upper = 0.9),
-#     makeIntegerParam("numepochs", lower = 2, upper = 1000)
-#   )
-#   return(par.set)
-# }
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

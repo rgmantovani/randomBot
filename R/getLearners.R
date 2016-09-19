@@ -4,9 +4,6 @@
 # [*] mlr Wrapper learners
 # http://mlr-org.github.io/mlr-tutorial/release/html/wrapper/index.html
 
-# TODO: add SAE, DBN and H20 learners
-# TODO: Add a Neural Network model
-
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
@@ -32,11 +29,6 @@ getPredefinedLearners = function() {
     classes = list(numeric = imputeMedian(), factor = imputeMode())
   )
 
-  lrn.randomForest = makeImputeWrapper(
-    learner = makeLearner("classif.randomForest", predict.type = "prob"),
-    classes = list(numeric = imputeMedian(), factor = imputeMode())
-  )
-
   lrn.lda = makeImputeWrapper(
     learner = makeLearner("classif.lda", predict.type = "prob"),
     classes = list(numeric = imputeMedian(), factor = imputeMode())
@@ -48,7 +40,7 @@ getPredefinedLearners = function() {
   )
 
   # All the learners remove constant and almost constant features
-  aux = list(lrn.rpart, lrn.kknn, lrn.nb, lrn.svm, lrn.gbm, lrn.randomForest, lrn.lda, lrn.qda)
+  aux = list(lrn.rpart, lrn.kknn, lrn.nb, lrn.svm, lrn.gbm, lrn.ranger, lrn.lda, lrn.qda)
   learners.list = lapply(aux, makeRemoveConstantFeaturesWrapper, perc = 0.01)
 
   return(learners.list)

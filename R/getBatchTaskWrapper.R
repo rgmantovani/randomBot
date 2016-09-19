@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-# An OpenML task just can be converted to an oml object, if:
+# An OpenML task just can be converted to an oml object if:
 #   1. it has at least one evaluation measure defined
 #   2. the task and its dataset (both) must have least one target feature specified
 

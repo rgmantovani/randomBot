@@ -3,59 +3,68 @@
 
   devtools::load_all()
 
-  unlink("randomBot-files/", recursive = TRUE)
-
+  task.ids = c(3494) #, 3492, 3493)
+  populateOMLCache(task.ids = task.ids, overwrite = FALSE)
+ 
+  unlink("test-files/", recursive = TRUE)
   reg = makeExperimentRegistry(
-    id = "randomBot", 
+    id = "test", 
     packages = c("ParamHelpers", "mlr", "OpenML"), 
     src.dirs = "R/"
   )
+  
+  measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
+  learners = getPredefinedLearners()[2]
 
-  # tasks = getPredefinedTasks(pre)
-  # tasks = c(3647, 3577, 3731) #, 3729)
-  tasks = c(3494, 3492, 3493)
-  # tasks = selected.tasks#[1:30]
+  # Creating new jobs (one learner by time)
+  aux = lapply(learners, function(learner) {
 
-  measures = c("predictive_accuracy", 
-    "usercpu_time_millis_testing", 
-    "usercpu_time_millis_training")
+    par.set = getHyperSpace(learner = learner, p = 1, n = 100)
+    budget = 5
+    
+    # creating *budget* random runs for each task
+    inner.aux = lapply(task.ids, function(task.id) {
+    
+      new.jobs = batchmark(
+        reg       = reg, 
+        task.id   = task.ids,
+        learners  = list(learner),
+        measures  = measures,
+        reps      = budget,
+        overwrite = TRUE
+      )
+      return(new.jobs)
+    })
+    return(unlist(inner.aux))
+  })
+  
+  all.jobs = setdiff(findNotDone(reg), findErrors(reg))
 
-  learners = getPredefinedLearners()#[7:8]
-
-  # Creating new jobs
-  new.jobs = settingExperiment(
-    reg       = reg,
-    task.ids  = tasks, 
-    learners  = learners,
-    measures  = measures,
-    overwrite = TRUE,
-  )
- 
   # Checking if is the first submission
   if( length(findDone(reg)) == 0 ) {
     catf(" * First execution of the experiments ...")
   } else {
     catf(" * There are remaining jobs or new ones ...")
   }
- 
-  # # Running what is not done
-  all.jobs = setdiff(findNotDone(reg), findErrors(reg))
   print(all.jobs)
 
   # Call test jobs
   # for(job in all.jobs){
-  #   testJob(reg = reg, id = job)
+  #   testJob(reg = reg, id = job, resources = list(walltime = 2))
   # }
 
-  # catf(" * Submitting all jobs ...")
+  catf(" * Submitting all jobs ...")
   submitJobs(
     reg = reg, 
     ids = all.jobs, 
-    resources = list(memory = 8 * 1024),# , walltime = 3600),
+    resources = list(walltime = 2),
     job.delay = TRUE
   )
-  
-  status = waitForJobs(reg = reg, ids = all.jobs)
+
+  # getBatchJobsConf()$default.resources
+  # res1 = getJobResources(reg)
+
+  # status = waitForJobs(reg = reg, ids = all.jobs)
   catf(" * Done.")
 
 # -------------------------------------------------------------------------------------------------

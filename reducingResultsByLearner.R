@@ -1,20 +1,18 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
-
+# * Examples:
 # reducingResultsByLearner(lrn = "classif.rpart")
-# reducingResultsByLearner(lrn = "classif.kknn")
-# reducingResultsByLearner(lrn = "classif.svm")
-# reducingResultsByLearner(lrn = "classif.gbm")
-# reducingResultsByLearner(lrn = "classif.ranger")
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
 reducingResultsByLearner = function(lrn = NULL){
 
+  if(is.null(lrn)) {
+    stopf("Please, provide a valid classifier. ")
+  }
+  
   devtools::load_all()
-
-  # Creating meta level output dir
   if(!dir.exists("output/")) {
     dir.create(path = "output/", recursive = TRUE)
   }
@@ -34,7 +32,7 @@ reducingResultsByLearner = function(lrn = NULL){
   }
   
   sel.ids = filterResults(reg = reg, ids = findDone(reg), fun = fn.filter)
-  cat(" -", length(sel.ids), "job(s) were found for learner:\'",lrn,"\'\n")
+  cat(" - ", length(sel.ids), "job(s) were found for learner:\'",lrn,"\'\n")
 
   res.list = reduceDefaultResults(reg = reg, ids = sel.ids)
   ret = do.call("rbind", res.list)
@@ -45,6 +43,5 @@ reducingResultsByLearner = function(lrn = NULL){
   save(x = ret, file = paste0("output/", output.file, ".RData"))
 
 }
-
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

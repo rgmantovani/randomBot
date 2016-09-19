@@ -1,15 +1,15 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-batchmark = function(reg, task.id, learners, measures, repls = 1L, overwrite = FALSE) {
+batchmark = function(reg, task.id, learners, reps, measures, overwrite = FALSE) {
   
   BatchExperiments:::checkExperimentRegistry(reg)
   
   if ( any(c("mlr", "OpenML") %nin% names(reg$packages)) ) {
     stop("\'mlr\' and \'OpenML\' are required on the slaves, please add them via 'addRegistryPackages'")
   }
-
-  assertCount(repls)
+  
+  assertCount(reps)
   assertFlag(overwrite)
   learners.names = vcapply(learners, "[[", "id")
 
@@ -24,7 +24,8 @@ batchmark = function(reg, task.id, learners, measures, repls = 1L, overwrite = F
     task.id = task.id,
     seed = reg$seed + seq_along(task.id)
   )
-  
+
+  # Adding learners  
   algorithm.designs = Map(
     f = function(id, learner) {
       apply.fun = getBatchAlgoWrapper(learner)
@@ -37,7 +38,7 @@ batchmark = function(reg, task.id, learners, measures, repls = 1L, overwrite = F
 
   # Creating jobs
   job.ids = addExperiments(reg = reg, prob.designs = problem.designs, 
-    algo.designs = algorithm.designs, repls = repls, skip.defined = TRUE)
+    algo.designs = algorithm.designs, repls = reps, skip.defined = TRUE)
 
   return (job.ids)
 }
