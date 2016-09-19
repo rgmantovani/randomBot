@@ -20,7 +20,7 @@ batchmark = function(reg, task.id, learners, reps, measures, overwrite = FALSE) 
       addProblem(reg = reg, id = id, static = static, overwrite = overwrite, seed = seed)
       makeDesign(id = id)
     }, 
-    id = paste0("OpenML_Task_", task.id), 
+    id = paste0("OML_Task_", task.id), 
     task.id = task.id,
     seed = reg$seed + seq_along(task.id)
   )

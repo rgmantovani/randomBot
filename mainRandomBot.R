@@ -24,15 +24,11 @@ main = function() {
     
     # creating *budget* random runs for each task
     inner.aux = lapply(task.ids, function(task.id) {
-      new.jobs = batchmark(
-        reg       = reg, 
-        task.id   = task.ids,
-        learners  = list(learner),
-        measures  = measures,
-        reps      = budget,
-        overwrite = TRUE
-      )
+    
+      new.jobs = batchmark(reg = reg, task.id = task.ids, learners = list(learner),
+        measures = measures, reps = budget, overwrite = TRUE)
       return(new.jobs)
+       
     })
     return(unlist(inner.aux))
   })
