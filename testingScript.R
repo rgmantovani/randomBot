@@ -3,9 +3,10 @@
 
   devtools::load_all()
 
-  task.ids = c(3494, 3492, 3493)
+  # task.ids = c(3494, 3492, 3493)
+  tasks.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)
   populateOMLCache(task.ids = task.ids, overwrite = FALSE)
- 
+
   # unlink("test-files/", recursive = TRUE)
   reg = makeExperimentRegistry(
     id = "test", 
@@ -14,7 +15,7 @@
   )
   
   measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
-  learners = getPredefinedLearners()[3]
+  learners = getPredefinedLearners()[1:3]
 
   # Creating new jobs (one learner by time)
   aux = lapply(learners, function(learner) {

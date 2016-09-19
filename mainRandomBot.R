@@ -11,8 +11,8 @@ main = function() {
     src.dirs = "R/"
   )
 
-  tasks = getTaggedTasks(tag = "study_14")
-  populateOMLCache(task.ids = tasks, overwrite = FALSE)
+  task.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)
+  populateOMLCache(task.ids = task.ids, overwrite = FALSE)
 
   measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
   learners = getPredefinedLearners()
@@ -45,12 +45,11 @@ main = function() {
     catf(" * There are remaining jobs or new ones ...")
   }
  
-  # # Running what is not done
+  # Running what is not done and did not threw an error
   all.jobs = setdiff(findNotDone(reg), findErrors(reg))
   print(all.jobs)
 
   catf(" * Submitting all jobs ...")
-  # Walltime = 48 hs
   submitJobs(reg = reg, ids = all.jobs, job.delay = TRUE, resources = list(walltime = 3600 * 24 * 2))
   status = waitForJobs(reg = reg, ids = all.jobs)
   catf(" * Done.")
