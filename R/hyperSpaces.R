@@ -3,11 +3,8 @@
 
 getHyperSpace = function(learner, ...) {
 
-  temp = gsub(x = learner$id, pattern = ".preproc", replacement = "")
-  name = sub('.imputed', '', temp)
-  name = sub('classif.', '', name)
+  name = gsub(pattern="classif.|.preproc|.imputed", replacement="", x=learner$id)
   substring(name, 1, 1) = toupper(substring(name, 1, 1)) 
-  
   fn.space = get(paste0("get", name , "Space"))
   par.set = fn.space(...)
   return(par.set)

@@ -20,11 +20,14 @@ main = function() {
   # Creating new jobs (one learner by time)
   aux = lapply(learners, function(learner) {
     par.set = getHyperSpace(learner = learner, p = 1, n = 100)
-    budget = length(par.set$pars) * TUNING.CONSTANT
-    
-    # creating *budget* random runs for each task
+
+    if(length(par.set$pars) > 0) {
+      budget = length(par.set$pars) * TUNING.CONSTANT
+    } else {
+      budget = 1
+    }
+
     inner.aux = lapply(task.ids, function(task.id) {
-    
       new.jobs = batchmark(reg = reg, task.id = task.ids, learners = list(learner),
         measures = measures, reps = budget, overwrite = TRUE)
       return(new.jobs)

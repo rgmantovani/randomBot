@@ -14,13 +14,17 @@
   )
   
   measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
-  learners = getPredefinedLearners()[1:3]
+  learners = getPredefinedLearners()[3]
 
   # Creating new jobs (one learner by time)
   aux = lapply(learners, function(learner) {
 
     par.set = getHyperSpace(learner = learner, p = 1, n = 100)
-    budget = 10
+    if(length(par.set$pars) > 0) {
+      budget = 3
+    } else {
+      budget = 1
+    }
     
     # creating *budget* random runs for each task
     inner.aux = lapply(task.ids, function(task.id) {
@@ -49,6 +53,7 @@
   # }
 
   catf(" * Submitting all jobs ...")
+  # testJob(reg = reg, id = 1, resources= list(walltime = 60*60*24*2))
   submitJobs(
     reg = reg, 
     ids = all.jobs, 
@@ -56,10 +61,6 @@
     job.delay = TRUE
   )
 
-  # getBatchJobsConf()$default.resources
-  # res1 = getJobResources(reg)
-
-  # status = waitForJobs(reg = reg, ids = all.jobs)
   catf(" * Done.")
 
 # -------------------------------------------------------------------------------------------------
