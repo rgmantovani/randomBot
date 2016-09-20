@@ -30,7 +30,7 @@
     new.jobs = batchmark(reg = reg, task.id = task.ids, 
       learners = list(learner), measures = measures, 
       reps = budget, overwrite = TRUE)
-    })
+  })
   
   all.jobs = setdiff(findNotDone(reg), findErrors(reg))
 

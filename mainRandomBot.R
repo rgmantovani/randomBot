@@ -27,10 +27,11 @@ main = function() {
       budget = 1
     }
 
-    new.jobs = batchmark(reg = reg, task.id = task.id, 
+    # creating *budget* random runs for each task
+    new.jobs = batchmark(reg = reg, task.id = task.ids, 
       learners = list(learner), measures = measures, 
       reps = budget, overwrite = TRUE)
-   })
+  })
   
   all.jobs = setdiff(findNotDone(reg), findErrors(reg))
  
