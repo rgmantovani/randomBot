@@ -11,11 +11,11 @@ main = function() {
     src.dirs = "R/"
   )
 
-  task.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)
+  task.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)[1:3]
   populateOMLCache(task.ids = task.ids, overwrite = FALSE)
 
   measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
-  learners = getPredefinedLearners()
+  learners = getPredefinedLearners()[1:2]
 
   # Creating new jobs (one learner by time)
   aux = lapply(learners, function(learner) {

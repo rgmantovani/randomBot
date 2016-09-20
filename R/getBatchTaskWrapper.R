@@ -10,7 +10,13 @@
 
 getBatchTaskWrapper = function(task.id, measures) {
   
-  task = getOMLTask(task.id = task.id)
+  task = try(getOMLTask(task.id = task.id), silent = TRUE)
+  if (inherits(task, "try-error")) {
+    setOMLConfig(arff.reader = "RWeka")
+    task = getOMLTask(task.id = task.id)
+    setOMLConfig(arff.reader = "farff")
+  }
+
   task$input$evaluation.measures = measures
   if (length(task$input$data.set$target.features) == 0) {
     task$input$data.set$target.features = task$input$target.features

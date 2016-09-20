@@ -39,7 +39,7 @@ getPredefinedLearners = function() {
   )
 
   # All the learners remove constant and almost constant features
-  aux = list(lrn.rpart, lrn.kknn, lrn.nb, lrn.nnet, lrn.svm, lrn.gbm, lrn.ranger)
+  aux = list(lrn.nb, lrn.rpart, lrn.kknn, lrn.nnet, lrn.svm, lrn.gbm, lrn.ranger)
   learners.list = lapply(aux, makeRemoveConstantFeaturesWrapper, perc = 0.01)
 
   return(learners.list)
