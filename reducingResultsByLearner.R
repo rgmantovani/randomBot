@@ -31,11 +31,25 @@ reducingResultsByLearner = function(reg, lrn = NULL){
   }
   sel.ids = filterResults(reg = reg, ids = getJobIds(reg), fun = fn.filter)
 
-  # ADD all jobs (with errors)
   cat(" - ", length(sel.ids), "job(s) was(were) found for learner:\'",lrn,"\'\n")
-  ret = reduceResultsExperiments(reg, ids = sel.ids, impute.val=list())
-  
-  # write.csv with the output/RData
+
+  par.set = getHyperSpace(learner = makeLearner(lrn), p = 1, n = 100)  
+  if(length(par.set$pars) == 0) {
+    impute.pars = list()
+  } else {
+    impute.pars = lapply(par.set$pars, function(par) NA)
+  }
+
+  # Also reduce jobs with errors | unfinished
+  data = reduceResultsList(reg, ids = sel.ids, impute.val = impute.pars,
+   fun = function(aggr, job, res) {
+    temp = rbind(data.frame(id = job$id, prob = job$prob.id, algo = job$algo.id,
+      repl = job$repl, y = res, stringsAsFactors = FALSE))
+    return(temp)
+    }
+  )
+
+  ret = do.call("rbind", data)
   output.file = paste0(gsub(x = lrn, pattern = "\\.", replacement = "_"), "_space")
   write.csv(x = ret, file = paste0("output/", output.file, ".csv"))
   save(x = ret, file = paste0("output/", output.file, ".RData"))

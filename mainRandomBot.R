@@ -50,7 +50,9 @@ main = function() {
   print(all.jobs)
 
   catf(" * Submitting all jobs ...")
-  submitJobs(reg = reg, ids = all.jobs, job.delay = TRUE, resources = list(walltime = 3600 * 24 * 2))
+  submitJobs(reg = reg, ids = all.jobs, job.delay = TRUE, 
+    resources = list(walltime = 3600 * 24 * 2))
+  
   status = waitForJobs(reg = reg, ids = all.jobs)
   catf(" * Done.")
 

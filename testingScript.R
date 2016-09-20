@@ -3,11 +3,10 @@
 
   devtools::load_all()
 
-  # task.ids = c(3494, 3492, 3493)
-  tasks.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)
+  task.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)[1:3]
   populateOMLCache(task.ids = task.ids, overwrite = FALSE)
 
-  # unlink("test-files/", recursive = TRUE)
+  unlink("test-files/", recursive = TRUE)
   reg = makeExperimentRegistry(
     id = "test", 
     packages = c("ParamHelpers", "mlr", "OpenML"), 
@@ -15,7 +14,7 @@
   )
   
   measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
-  learners = getPredefinedLearners()[1:3]
+  learners = getPredefinedLearners()
 
   # Creating new jobs (one learner by time)
   aux = lapply(learners, function(learner) {
@@ -52,9 +51,10 @@
   # for(job in all.jobs){
   #   testJob(reg = reg, id = job, resources = list(walltime = 2))
   # }
+  # testJob(reg = reg, id = 30, resources= list(walltime = 60*60*24*2))
 
-  catf(" * Submitting all jobs ...")
-  # testJob(reg = reg, id = 1, resources= list(walltime = 60*60*24*2))
+  # catf(" * Submitting all jobs ...")
+
   submitJobs(
     reg = reg, 
     ids = all.jobs, 

@@ -13,8 +13,7 @@ getBatchAlgoWrapper = function(learner) {
   
     if(length(par.set$pars) != 0) {
       params = ParamHelpers::sampleValue(par.set, trafo = TRUE)
-      new.params = params[!sapply(params, is.na)]
-      new.lrn = setHyperPars(learner = learner, par.vals = new.params)
+      new.lrn = setHyperPars(learner = learner, par.vals = params)
     } else {
       new.lrn = learner
     }
@@ -30,9 +29,9 @@ getBatchAlgoWrapper = function(learner) {
     perf = getBMRAggrPerformances(bmr = oml.run$bmr, as.df = TRUE)
 
     if(length(par.set$pars) == 0) {
-      res = cbind(run.id, perf)
+      res = cbind(run.id, static$task$task.id, perf)
     } else {
-      res = cbind(run.id, as.data.frame(params), perf)
+      res = cbind(run.id, static$task$task.id, as.data.frame(params), perf)
     }
    
     return(res)

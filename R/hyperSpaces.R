@@ -74,32 +74,16 @@ getGbmSpace = function(...) {
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getLdaSpace = function(...) {
-  args = list(...)
+getNnTrainSpace = function(...) {
   par.set = makeParamSet(
-    makeDiscreteParam("method", values = c("moment", "mle", "mve", "t"), default = "moment"),
-    makeNumericParam("nu", lower = 2, upper = args$n, requires = quote(method == "t")),
-    makeNumericParam("tol", lower = -5, upper = 0, trafo = function(x) 10^x),
-    makeDiscreteParam("predict.method", values = c("plug-in", "predictive", "debiased"), 
-      default = "plug-in")
+    makeIntegerParam("max.number.of.layers", lower = 1, upper = 2),
+    makeIntegerVectorParam("hidden", len = 2L, lower = 5, upper = 11, trafo = function(x) 2^x),
+    makeIntegerParam("numepochs", lower = 1, upper = 3, trafo = function(x) 10^x),
+    makeNumericParam("momentum", lower = 0.1, upper = 0.9)
   )
   return(par.set)
 }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-getQdaSpace = function(...) {
-  args = list(...)
-  par.set = makeParamSet(
-    makeDiscreteParam("method", values = c("moment", "mle", "mve", "t"), default = "moment"),
-    makeNumericParam("nu", lower = 2, upper = args$n, requires = quote(method == "t")),
-    makeDiscreteParam("predict.method", values = c("plug-in", "predictive", "debiased"), 
-      default = "plug-in")
-  )
-  return(par.set)
-}
-
+ 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
