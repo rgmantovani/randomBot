@@ -32,14 +32,14 @@ getPredefinedLearners = function() {
     dummy.classes = c("numeric", "factor")
   )
 
-  lrn.nnTrain = makeImputeWrapper(
-    learner = makeLearner("classif.nnTrain", predict.type = "prob"),
+  lrn.nnet = makeImputeWrapper(
+    learner = makeLearner("classif.nnet", predict.type = "prob"),
     classes = list(numeric = imputeMedian(), factor = imputeMode()),
     dummy.classes = c("numeric", "factor")
   )
 
   # All the learners remove constant and almost constant features
-  aux = list(lrn.rpart, lrn.kknn, lrn.nb, lrn.nnTrain, lrn.svm, lrn.gbm, lrn.ranger)
+  aux = list(lrn.rpart, lrn.kknn, lrn.nb, lrn.nnet, lrn.svm, lrn.gbm, lrn.ranger)
   learners.list = lapply(aux, makeRemoveConstantFeaturesWrapper, perc = 0.01)
 
   return(learners.list)

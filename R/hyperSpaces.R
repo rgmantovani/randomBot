@@ -74,12 +74,11 @@ getGbmSpace = function(...) {
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getNnTrainSpace = function(...) {
+getNnetSpace = function(...) {
   par.set = makeParamSet(
-    makeIntegerParam("max.number.of.layers", lower = 1, upper = 2),
-    makeIntegerVectorParam("hidden", len = 2L, lower = 5, upper = 11, trafo = function(x) 2^x),
-    makeIntegerParam("numepochs", lower = 1, upper = 3, trafo = function(x) 10^x),
-    makeNumericParam("momentum", lower = 0.1, upper = 0.9)
+    makeIntegerParam("size",  lower = 1, upper = 11, trafo = function(x) 2^x ),
+    makeIntegerParam("maxit", lower = 1, upper = 3, trafo = function(x) 10^x),
+    makeNumericParam("decay", lower =-4, upper = 0, trafo = function(x)10^x)
   )
   return(par.set)
 }

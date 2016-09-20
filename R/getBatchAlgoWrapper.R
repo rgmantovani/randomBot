@@ -29,9 +29,9 @@ getBatchAlgoWrapper = function(learner) {
     perf = getBMRAggrPerformances(bmr = oml.run$bmr, as.df = TRUE)
 
     if(length(par.set$pars) == 0) {
-      res = cbind(run.id, static$task$task.id, perf)
+      res = cbind(run.id, perf)
     } else {
-      res = cbind(run.id, static$task$task.id, as.data.frame(params), perf)
+      res = cbind(run.id, as.data.frame(params), perf)
     }
    
     return(res)
