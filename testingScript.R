@@ -14,7 +14,7 @@
   )
   
   measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
-  learners = getPredefinedLearners()
+  learners = getPredefinedLearners()[1:2]
 
   # Creating new jobs (one learner by time)
   aux = lapply(learners, function(learner) {
@@ -27,15 +27,10 @@
     }
     
     # creating *budget* random runs for each task
-    inner.aux = lapply(task.ids, function(task.id) {
-    
-      new.jobs = batchmark(reg = reg, task.id = task.ids, learners = list(learner),
-        measures = measures, reps = budget, overwrite = TRUE)
-      return(new.jobs)
-    
+    new.jobs = batchmark(reg = reg, task.id = task.ids, 
+      learners = list(learner), measures = measures, 
+      reps = budget, overwrite = TRUE)
     })
-    return(unlist(inner.aux))
-  })
   
   all.jobs = setdiff(findNotDone(reg), findErrors(reg))
 

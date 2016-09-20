@@ -5,36 +5,32 @@ main = function() {
 
   devtools::load_all()
   
+  task.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)[1:3]
+  populateOMLCache(task.ids = task.ids, overwrite = FALSE)
+
   reg = makeExperimentRegistry(
    id = "randomBot", 
     packages = c("ParamHelpers", "mlr", "OpenML"), 
     src.dirs = "R/"
   )
-
-  task.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)[1:3]
-  populateOMLCache(task.ids = task.ids, overwrite = FALSE)
-
+  
   measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
-  learners = getPredefinedLearners()[1:2]
+  learners = getPredefinedLearners()[1]
 
   # Creating new jobs (one learner by time)
   aux = lapply(learners, function(learner) {
-    par.set = getHyperSpace(learner = learner, p = 1, n = 100)
 
+    par.set = getHyperSpace(learner = learner, p = 1, n = 100)
     if(length(par.set$pars) > 0) {
       budget = length(par.set$pars) * TUNING.CONSTANT
     } else {
       budget = 1
     }
 
-    inner.aux = lapply(task.ids, function(task.id) {
-      new.jobs = batchmark(reg = reg, task.id = task.ids, learners = list(learner),
-        measures = measures, reps = budget, overwrite = TRUE)
-      return(new.jobs)
-       
-    })
-    return(unlist(inner.aux))
-  })
+    new.jobs = batchmark(reg = reg, task.id = task.id, 
+      learners = list(learner), measures = measures, 
+      reps = budget, overwrite = TRUE)
+   })
   
   all.jobs = setdiff(findNotDone(reg), findErrors(reg))
  
