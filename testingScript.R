@@ -3,7 +3,8 @@
 
   devtools::load_all()
 
-  task.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)[1:3]
+  # task.ids = setdiff(getTaggedTasks(tag = "study_14"), REMOVE)[1:3]
+  task.ids = c(125921)
   populateOMLCache(task.ids = task.ids, overwrite = FALSE)
 
   unlink("test-files/", recursive = TRUE)
@@ -13,8 +14,8 @@
     src.dirs = "R/"
   )
   
-  measures = c("predictive_accuracy", "usercpu_time_millis_testing", "usercpu_time_millis_training")
-  learners = getPredefinedLearners()[1:2]
+  measures = c("predictive_accuracy")
+  learners = getPredefinedLearners()[2]
 
   # Creating new jobs (one learner by time)
   aux = lapply(learners, function(learner) {
@@ -43,6 +44,7 @@
   print(all.jobs)
 
   # Call test jobs
+  testJob(reg = reg, id = 1)
   # for(job in all.jobs){
   #   testJob(reg = reg, id = job, resources = list(walltime = 2))
   # }
@@ -50,12 +52,12 @@
 
   # catf(" * Submitting all jobs ...")
 
-  submitJobs(
-    reg = reg, 
-    ids = all.jobs, 
-    resources = list(walltime = 60*60*24*2),
-    job.delay = TRUE
-  )
+  # submitJobs(
+  #   reg = reg, 
+  #   ids = all.jobs, 
+  #   resources = list(walltime = 60*60*24*2),
+  #   job.delay = TRUE
+  # )
 
   catf(" * Done.")
 

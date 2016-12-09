@@ -14,8 +14,7 @@ configureMlr(on.learner.error = "warn")
 configureMlr(show.info = TRUE)
 
 # Please, replace it by your own OpenML apikey
-# saveOMLConfig(apikey = "your openml api key", overwrite = TRUE)
-saveOMLConfig(apikey = "76444ac061f2b76258c96f680f0c6ae0", overwrite = TRUE)
+saveOMLConfig(apikey = "cc271bf0ceb850a5ed1a184a4159b5b3", overwrite = TRUE)
 
 # tuning constant
 TUNING.CONSTANT = 100
